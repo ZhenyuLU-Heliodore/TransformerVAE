@@ -74,7 +74,7 @@ class Trainer:
 
     def validate(self, epoch):
         losses = 0
-        n_batches = len(self.train_loader)
+        n_batches = len(self.validation_loader)
 
         self.model.eval()
         with torch.no_grad():
