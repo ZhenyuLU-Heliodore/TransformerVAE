@@ -50,7 +50,7 @@ if __name__ == "__main__":
     parser.add_argument("--decoder_norm", default=None, type=torch.nn.Module)
     parser.add_argument("--rpe", default=False, type=bool)
     parser.add_argument("--device", default="cuda", type=str)
-    parser.add_argument("--epochs", default=10, type=int)
+    parser.add_argument("--epochs", default=80, type=int)
 
     args = parser.parse_args()
 
