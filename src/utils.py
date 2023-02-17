@@ -23,11 +23,11 @@ def _gaussian_sampling(mean, log_var):
     return noise.mul(std).add(mean)
 
 
-def _get_sinusoidal_pe(seq_len, d, n=10000):
-    pe = np.zeros((seq_len, d), dtype=float)
+def _get_sinusoidal_pe(seq_len, dim, n=10000):
+    pe = np.zeros((seq_len, dim), dtype=float)
     for p in range(seq_len):
-        for i in np.arange(int(d / 2)):
-            denominator = np.power(n, 2 * i / d)
+        for i in np.arange(int(dim / 2)):
+            denominator = np.power(n, 2 * i / dim)
             pe[p, 2 * i] = np.sin((p / denominator))
             pe[p, 2 * i + 1] = np.cos(p / denominator)
     return pe
@@ -36,4 +36,4 @@ def _get_sinusoidal_pe(seq_len, d, n=10000):
 def _get_target_mask(seq_len):
     attn_shape = (seq_len, seq_len)
     subsequent_mask = np.triu(np.ones(attn_shape), k=1).astype('uint8')
-    return torch.from_numpy(subsequent_mask) != 0
+    return subsequent_mask != 0

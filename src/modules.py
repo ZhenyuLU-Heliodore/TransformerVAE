@@ -210,7 +210,7 @@ class VAECorp(nn.Module):
         self.log_var = nn.Linear(encoder_dim, decoder_dim)
 
         self.gaussian = GaussianPrior(num_classes, decoder_dim)
-        self.classifier = Classifier(num_classes, decoder_dim)
+        self.classifier = Classifier(decoder_dim, num_classes)
 
     def forward(self, src):
         z_mean = F.relu(self.mean(src))
@@ -234,7 +234,7 @@ class GaussianPrior(nn.Module):
 
 
 class Classifier(nn.Module):
-    def __init__(self, num_classes, latent_dim):
+    def __init__(self, latent_dim, num_classes):
         super().__init__()
         self.linear1 = nn.Linear(latent_dim, 256)
         self.linear2 = nn.Linear(256, num_classes)
