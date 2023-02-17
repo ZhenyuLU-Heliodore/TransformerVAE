@@ -31,18 +31,18 @@ if __name__ == "__main__":
     parser.add_argument("--num_heads", default=8, type=int)
     parser.add_argument("--encoder_dim", default=256, type=int)
     parser.add_argument("--decoder_dim", default=256, type=int)
-    parser.add_argument("--num_encoder_layers", default=3, type=int)
-    parser.add_argument("--num_decoder_layers", default=3, type=int)
+    parser.add_argument("--num_encoder_layers", default=6, type=int)
+    parser.add_argument("--num_decoder_layers", default=6, type=int)
     parser.add_argument("--dim_ffn", default=512, type=int)
     parser.add_argument("--dropout", default=0.1, type=float)
-    parser.add_argument("--activation", default="gelu", type=str)
+    parser.add_argument("--activation", default="relu", type=str)
     parser.add_argument("--layer_norm_eps", default=1e-5, type=float)
     parser.add_argument("--encoder_norm", default=None, type=torch.nn.Module)
     parser.add_argument("--decoder_norm", default=None, type=torch.nn.Module)
     parser.add_argument("--rpe", default=False, type=bool)
 
     # Dataset args
-    parser.add_argument("--training_set",default="./dataset/training_set.pt", type=str)
+    parser.add_argument("--training_set", default="./dataset/training_set.pt", type=str)
     parser.add_argument("--validation_set", default="./dataset/validation_set.pt", type=str)
     parser.add_argument("--num_classes", default=4, type=int)
     parser.add_argument("--num_tokens", default=256, type=int)
@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
     # optimizer args
     parser.add_argument("--lambda1", default=1., type=float)
-    parser.add_argument("--lambda2", default=6., type=float)
+    parser.add_argument("--lambda2", default=3., type=float)
     parser.add_argument("--lr", default=1e-4, type=float)
 
     args = parser.parse_args()
