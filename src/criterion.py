@@ -7,7 +7,6 @@ from sklearn.metrics.cluster import rand_score, adjusted_rand_score
 def vae_clustering_loss(x_recon, x, log_var, z_prior_mean, y, lambda1=1., lambda2=3.):
     num_tokens = x_recon.size(dim=-1) - 1 # counted excluding pad_id
     cross_entropy = CrossEntropyLoss()
-
     # x_recon: [batch_size, seq_len, num_tokens+1] -> [-1, num_tokens+1]
     # x: [batch_size, seq_len] -> [batch_size * seq_len]
     recon_loss = cross_entropy(

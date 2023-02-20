@@ -20,6 +20,7 @@ def _get_activation_fn(activation: str):
 def _gaussian_sampling(mean, log_var):
     std = torch.exp(0.5 * log_var)
     noise = torch.randn_like(std)
+
     return noise.mul(std).add(mean)
 
 

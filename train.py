@@ -3,6 +3,7 @@ import torch
 
 from torch.utils.data import DataLoader
 from src import Trainer
+from torch.utils.data import TensorDataset
 
 
 def train(args):
@@ -12,6 +13,11 @@ def train(args):
 
     training_dataset = torch.load(args.training_set)
     validation_dataset = torch.load(args.validation_set)
+
+    # training_data = torch.arange(0, 256).unsqueeze(0)
+    # padding_mask = torch.zeros_like(training_data).to(torch.bool)
+    # label = torch.tensor([1])
+    # training_dataset = TensorDataset(training_data, label, padding_mask)
 
     training_loader = DataLoader(training_dataset, batch_size=args.batch_size, shuffle=True)
     validation_loader = DataLoader(validation_dataset, batch_size=args.validation_batch_size, shuffle=True)
@@ -64,5 +70,10 @@ if __name__ == "__main__":
     parser.add_argument("--lr", default=1e-4, type=float)
 
     args = parser.parse_args()
+
+    # args.batch_size = 1
+    # args.num_classes = 1
+    # args.lr = 5e-4
+    # args.epochs = 1000
 
     train(args)

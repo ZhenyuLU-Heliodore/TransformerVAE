@@ -63,7 +63,9 @@ class Trainer:
             cat_losses += cat_loss
 
             self.optimizer.zero_grad()
+
             loss.backward()
+            # recon_loss.backward()
             self.optimizer.step()
 
         training_result = (
@@ -86,6 +88,7 @@ class Trainer:
         with torch.no_grad():
             for i, batch in enumerate(self.validation_loader):
                 inputs, labels, padding_mask = map(lambda x: x.to(self.device), batch)
+
                 x_recon, z_mean, z_log_var, z_prior_mean, z, y = self.model(
                     token_seq=inputs, key_padding_mask=padding_mask
                 )
@@ -94,6 +97,8 @@ class Trainer:
                     x_recon, inputs, z_log_var, z_prior_mean, y,
                     lambda1=self.lambda1, lambda2=self.lambda2
                 )
+                # # another method to choose predicted y
+                # y = z_prior_mean.square().mean(dim=-1).argmin(dim=1)
 
                 y_arrays.append(y.cpu().numpy())
                 label_arrays.append(labels.cpu().numpy())
@@ -125,6 +130,7 @@ def eval_global_score(
     if predicts_all.shape.__len__() > 1:
         predicts_all = np.argmax(predicts_all, axis=-1)
     labels_all = np.concatenate(labels, axis=0)
+    print(predicts_all, labels_all)
     score = cluster_eval_metric(predicts_all, labels_all, metric=eval_metric)
 
     return score
